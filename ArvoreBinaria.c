@@ -22,10 +22,10 @@ int main(int argc, char const *argv[])
 {
 	arvore a, *alfaToBin;
 	int menu;
+	alfaToBin = &a;
+	alfaToBin->ordenar = 17; alfaToBin->alfa = 'H'; alfaToBin->bin = 10001;
 	alfaToBin->esq = NULL;
 	alfaToBin->dir = NULL;
-	alfaToBin->ordenar = 17; alfaToBin->alfa = 'H'; alfaToBin->bin = 10001;
-	alfaToBin = &a;
 	alfaToBin = inicializarArvore(alfaToBin);
 	while (true) {
 		scanf("%d", &menu);
@@ -66,6 +66,29 @@ void traduzirQualquer (arvore *r) {
 
 }
 
+arvore *busca(**alfaToBin, char c, int i, char modo) {
+	if (pRaiz != NULL) {
+		if (modo == 'c') {
+			if (c == (*alfaToBin)->alfa) {
+				return alfaToBin;
+			}
+		} else {
+			if (i == (*alfaToBin)->bin) {
+				return alfaToBin;
+			}
+		}
+	} else  if (ordenar < (*alfaToBin)->ordenar) {
+		if ((*alfaToBin)->esq != NULL) {
+			return busca(&(*alfaToBin)->esq, ordenar);
+		}
+	} else {
+		if ((*alfaToBin)->dir != NULL) {
+			return busca(&(*alfaToBin)->dir, ordenar);
+		}
+	}
+	return NULL;
+}
+
 arvore *insere(arvore *a, arvore *no) {
 	if (a == NULL) a = no;
 	else if (a->ordenar >= no->ordenar) {
@@ -89,8 +112,8 @@ arvore *insere(arvore *a, arvore *no) {
 
 
 arvore *inicializarArvore(arvore *r) {
-	arvore *no;
-	no->esq =NULL;
+	arvore no;
+	noesq = NULL;
 	no->dir = NULL;
 	no->ordenar = 0; no->alfa = '0'; no->bin = 000000; r = insere(r, no);
 	no->ordenar = 1; no->alfa = '1'; no->bin = 000001; r = insere(r, no);
